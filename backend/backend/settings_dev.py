@@ -1,7 +1,6 @@
-import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent # this is specifically only for use in this file
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-s7!$t5-_^uy$6%8v^-rw!ndwr19-@pht1f1yw#2n&k*a62@+=n'
 DEBUG = True
@@ -14,6 +13,7 @@ FRONTEND_REVALIDATE_URL = 'http://localhost:3000/api/revalidate'
 REVALIDATE_SECRET = 'dev-insecure-revalidate-secret'
 CAPTCHA_VERIFY_URL = 'https://(url)/siteverify'
 CAP_SECRET = ''
+AES_KEY = 'UiMzEG1ZzRM0BglYWjBcvP8Mwrxxxja8gL_yRkFwWKM='
 
 DATABASES = {
     'default': {

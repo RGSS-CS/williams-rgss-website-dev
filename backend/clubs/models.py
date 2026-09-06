@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.conf import settings
 from taggit.managers import TaggableManager
 from PIL import Image
-from management.models import SocialMedia
 from django.contrib.contenttypes.fields import GenericRelation
 from photologue.models import Gallery
 
@@ -91,7 +90,6 @@ class Club(models.Model):
         "using a google classroom code or a link to a form. *It will not be " \
         "visible when selected 'Not Accepting' in the field below."
     )
-    social_media = GenericRelation(SocialMedia)
     gallery = models.ForeignKey(
         Gallery, on_delete=models.SET_NULL, null=True, blank=True, related_name="clubs"
     )
@@ -213,7 +211,7 @@ class ClubChanges(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
     reviewed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, 
-        default ="Pending Reviewer", related_name='reviewed_club_changes'
+        related_name='reviewed_club_changes'
     )
     reviewed_at = models.DateTimeField(null=True, blank = True)
     review_note = models.TextField(max_length=200, blank=True)

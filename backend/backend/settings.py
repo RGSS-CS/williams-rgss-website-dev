@@ -11,13 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from . import settings_local as config
 from easy_thumbnails.conf import Settings as thumbnail_settings
-
-# import json
-# import dotenv
-# import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,9 +31,9 @@ ALLOWED_HOSTS = config.ALLOWED_HOSTS
 CSRF_TRUSTED_ORIGINS = config.CSRF_TRUSTED_ORIGINS
 
 CSRF_COOKIE_SECURE = config.CSRF_COOKIE_SECURE
+AES_KEY = config.AES_KEY
 
-# The public deployment terminates TLS before requests reach Django. Trust its
-# protocol header so build_absolute_uri() produces HTTPS media URLs.
+# get from config and catch with None in case of development settings in use
 SECURE_PROXY_SSL_HEADER = getattr(config, "SECURE_PROXY_SSL_HEADER", None)
 
 SIGNING_KEY = config.SIGNING_KEY
@@ -165,22 +160,20 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'America/Toronto'
-
 USE_I18N = True
 
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'America/Toronto'
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = Path(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = Path(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 # Calendar stuff
@@ -194,3 +187,5 @@ THUMBNAIL_PROCESSORS = (
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 THUMBNAIL_BASEDIR = 'cropped'
+
+AUTH_USER_MODEL = "users.CustomUser"
