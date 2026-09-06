@@ -211,7 +211,7 @@ class ClubChanges(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
     reviewed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, 
-        default ="Pending Reviewer", related_name='reviewed_club_changes'
+        related_name='reviewed_club_changes'
     )
     reviewed_at = models.DateTimeField(null=True, blank = True)
     review_note = models.TextField(max_length=200, blank=True)
