@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from . import settings_local as config
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
@@ -166,22 +165,20 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'America/Toronto'
-
 USE_I18N = True
 
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'America/Toronto'
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = Path(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = Path(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 # Calendar stuff
@@ -195,6 +192,5 @@ THUMBNAIL_PROCESSORS = (
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 THUMBNAIL_BASEDIR = 'cropped'
-
 
 AUTH_USER_MODEL = "users.CustomUser"
