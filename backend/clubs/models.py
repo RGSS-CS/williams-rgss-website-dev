@@ -48,7 +48,7 @@ class Club(models.Model):
         null=True, max_length=500, 
         help_text="Insert a long description for your club. This is where you can describe your club in detail."
     )
-    category = TaggableManager()
+    category = TaggableManager(blank=True)
     repetition = models.CharField(
         null=True, max_length=10, choices=Repetition.choices, 
         help_text="How often does your club meet? If your club meets on a different schedule," \
@@ -67,9 +67,6 @@ class Club(models.Model):
         blank=True, null=True, max_length=250, 
         help_text="This can be either a google classroom invite link or a application" \
         " form link *It will not be visable when selected 'Not Accepting' in the field below."
-    )
-    announcement = models.CharField(
-        null=True, help_text="This is where you announce application news."  #BEN ISSUE
     )
     day_of_meeting = models.CharField(max_length=10, choices=WeekDay.choices, null=True)
     time = models.TimeField(null=True)
@@ -123,26 +120,13 @@ class ClubWhyJoin(models.Model):
     def __str__(self):
         return self.title
     
-    # def save(self, *args, **kwargs):
-    #     if ClubWhyJoin.objects.filter(index=self.index).count() > 1:
-    #         for i in ClubWhyJoin.objects.filter(index__gt=self.index):
-    #             i.index += 1
-    #             i.save()
-
-    #     super().save(*args, **kwargs)
-        
-
 class ClubAnnouncement(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField(max_length=2000)
-    date_posted = models.DateTimeField(default=timezone.now)
-    pinned = models.BooleanField(
-        default=False,
-        help_text="Whether or not the post should be pinned to the top of the page."
-    )
-    club = models.ForeignKey(
-        Club, on_delete=models.CASCADE, related_name="club_announcement"
-    )
+    title = models.CharField(max_length=200, null=True)
+    description = models.TextField(max_length=500, null=True)
+    date_posted = models.DateTimeField(default=timezone.now, help_text="This does not reflect the post status of the announcement, it only reads the current date/time.")
+    popup = models.BooleanField(default=False, help_text="Determines whether popup is enabled for this announcement. Regardless, it will be shown in the announcements section.")
+    expiry = models.DateTimeField(null=True, help_text="When does this post expire? When expired, it will be marked as resolved in the announcment section.")
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="club_announcement")
 
     class Meta:
         verbose_name =  "Club Announcement"

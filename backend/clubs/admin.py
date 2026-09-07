@@ -32,7 +32,7 @@ class ClubsAdminForm(forms.ModelForm):
         fields = [
             "name", "preview_description", "description", "tagline",  
             "category", "gallery", "day_of_meeting", "time",        
-            "repetition", "room_number", "announcement", "classroom_code",
+            "repetition", "room_number", "classroom_code",
             "application_form_link", "join_instructions", "accepting_applicants",
             "teacher_advisor"
         ]
@@ -87,11 +87,30 @@ class ClubsAdminForm(forms.ModelForm):
         return instance
 
 
+class ClubAnnouncementAdminForm(forms.ModelForm):
+    class Meta:
+        model = ClubAnnouncement
+        fields = ['title', 'description', 'popup', 'expiry']
+        field_classes = {'expiry': forms.DateTimeField}
+        widgets = {
+            'expiry': forms.DateTimeInput(
+                attrs={'type': 'datetime-local', 'step': '1'},
+                format='%Y-%m-%dT%H:%M:%S',
+            ),
+        }
 
-    
-class WhyJoinInline(admin.TabularInline):
+
+class ClubAnnouncementInline(admin.StackedInline):
+    model = ClubAnnouncement
+    form = ClubAnnouncementAdminForm
+    fields = ['title','description','popup','date_posted','expiry']
+    readonly_fields = ['date_posted']
+    max_num = 1
+
+class WhyJoinInline(admin.StackedInline):
     model = ClubWhyJoin
-    extra = 1
+    extra = 3
+    max_num = 10
 
 
 @admin.register(Club)
