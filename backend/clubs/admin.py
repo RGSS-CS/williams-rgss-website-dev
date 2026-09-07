@@ -9,7 +9,7 @@ from taggit.models import Tag
 from django.contrib.admin import widgets
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.sites.models import Site
-from .models import Club, ClubWhyJoin, GalleryExtended
+from .models import Club, ClubWhyJoin, GalleryExtended, ClubAnnouncement
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 
 
