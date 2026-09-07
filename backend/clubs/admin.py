@@ -9,7 +9,7 @@ from taggit.models import Tag
 from django.contrib.admin import widgets
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.sites.models import Site
-from .models import Club, ClubWhyJoin, GalleryExtended, ClubMembership
+from .models import Club, ClubWhyJoin, GalleryExtended
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 
 
@@ -94,26 +94,7 @@ class WhyJoinInline(admin.TabularInline):
     extra = 1
 
 
-class ClubMemberInline(admin.TabularInline):
-    model = ClubMembership
-    extra = 1
-    fields = ("user", "role", "bypass_confirmation_restrictions")
-
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-    def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-
 @admin.register(Club)
 class ClubsAdmin(admin.ModelAdmin):
     form = ClubsAdminForm
     inlines = [WhyJoinInline]
-
-@admin.register(ClubMembership)
-class ClubMembershipAdmin(admin.ModelAdmin):
-    list_display = ("user", "club", "role", "bypass_confirmation_restrictions", "updated")
