@@ -1,8 +1,6 @@
 from django.test import TestCase
-
 from .models import Club, ClubWhyJoin
 from .serializers import ClubSerializer
-
 
 class ClubWhyJoinModelTests(TestCase):
     def test_why_join_reasons_are_ordered_by_index(self):
@@ -25,10 +23,8 @@ class ClubSerializerTests(TestCase):
             repetition=Club.Repetition.WEEKLY,
             day_of_meeting=Club.WeekDay.MONDAY,
         )
-
         serializer = ClubSerializer(club)
         data = serializer.data
-
         self.assertEqual(data["name"], "Coding Club")
         self.assertEqual(data["tagline"], "Build together")
         self.assertEqual(data["day_of_meeting"], Club.WeekDay.MONDAY)
